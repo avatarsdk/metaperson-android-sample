@@ -1,7 +1,7 @@
 # MetaPerson Android sample
-This demo projects shows how the MetaPerson avatars can be integrated into your native Android applications. It uses the mobile version of the [MetaPerson Creator]([https://mobile.metaperson.avatarsdk.com/](https://mobile.metaperson.avatarsdk.com/)) which helps you to create and customize your lifelike avatars. 
+This demo project shows how the MetaPerson avatars can be integrated into your native Android applications. It uses the mobile version of the [MetaPerson Creator]([https://mobile.metaperson.avatarsdk.com/](https://mobile.metaperson.avatarsdk.com/)) which helps you to create and customize your lifelike avatars. 
 ## Getting started
-First you will need to clone the repository to your local drive. Open your project in Android Studio and find the "credentials.xml" file (app/src/main/res/values/credentials.xml):
+First, you should clone the repository to your local drive. Open your project in Android Studio and find the "credentials.xml" file (app/src/main/res/values/credentials.xml):
 ![Credentials](./img/android-credentials.png)
 Fill in the CLIENT_ID and CLIENT_SECRET parameters with the values from your [Avatar SDK developer account](https://accounts.avatarsdk.com/developer/). Please note that if you make a mistake in your CLIENT_ID or CLIENT_SECRET, you won't be able to export your avatar! Once the parameters are set, build and run the application on your device. 
 Inside the application: 
@@ -11,7 +11,7 @@ Inside the application:
 - Once the link is created you can download your avatar (link is copied to the clipboard).
 ## How It Works
 
-Sample project is written in Kotlin and constists of two activities: 
+The sample project is written in Kotlin and consists of two activities: 
 java/com/avatarsdk/metaperson/MainActivity.kt and java/com/avatarsdk/metaperson/WebUiActivity.kt. MainActivity is the starting activity that sets up button handlers: open web view if "Create MetaPerson" is pressed and open the mail app if the "Email" button is pressed.
 ```kotlin
 binding.createButton.setOnClickListener {  
@@ -24,11 +24,11 @@ binding.mailButton.setOnClickListener{
     startActivity(Intent.createChooser(emailIntent, "Send feedback"))  
 }
 ```
-The WebUiActivity is responsible for commuincation with the MetaPerson creator. It uses the WebView class to display the MetaPerson creator on screen. The WebView object is created and initialized in onCreate function. The WebAppInterface class is responsible for handling result of the avatar export. We are injecting java object named metapersonJsApi into WebView. 
+The WebUiActivity is responsible for communication with the MetaPerson creator. It uses the WebView class to display the MetaPerson creator on screen. The WebView object is created and initialized in the onCreate function. The WebAppInterface class is responsible for handling the result of the avatar export. We are injecting a Java object named metapersonJsApi into WebView. 
 ```kotlin
 webView!!.addJavascriptInterface(WebAppInterface(this, webView!!), "metapersonJsApi")
 ```
-When onPageStarted callback of the WebView is called, we execute Javascript code that creates event handlers and forwards javascript call to the metapersonJsApi.showToast method. Here is the Javascript code ([See more information about JS API](https://docs.metaperson.avatarsdk.com/js_api.html)):
+When the onPageStarted callback of the WebView is called, we execute Javascript code that creates event handlers and forwards the JavaScript call to the metapersonJsApi.showToast method. Here is the Javascript code ([See more information about JS API](https://docs.metaperson.avatarsdk.com/js_api.html)):
 ```js
 function onWindowMessage(evt) {
     if (evt.type === 'message') {
