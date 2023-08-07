@@ -12,7 +12,7 @@ Inside the application:
 
 Sample project is written in Kotlin and constists of two activities: 
 java/com/avatarsdk/metaperson/MainActivity.kt and java/com/avatarsdk/metaperson/WebUiActivity.kt. MainActivity is the starting activity that sets up button handlers: open web view if "Create Metaperson" is pressed and open the mail app if the "Email" button is pressed.
-```
+```kotlin
 binding.createButton.setOnClickListener {  
     openMetapersonCreator()  
 }  
@@ -24,11 +24,11 @@ binding.mailButton.setOnClickListener{
 }
 ```
 The WebUiActivity is responsible for commuincation with the Metaperson creator. It uses the WebView class to display the Metaperson creator on screen. The WebView object is created and initialized in onCreate function. The WebAppInterface class is responsible for handling result of the avatar export. We are injecting java object named metapersonJsApi into WebView. 
-```
+```kotlin
 webView!!.addJavascriptInterface(WebAppInterface(this, webView!!), "metapersonJsApi")
 ```
 When onPageStarted callback of the WebView is called, we execute Javascript code that creates event handlers and forwards javascript call to the metapersonJsApi.showToast method. Here is the Javascript code ([See more information about JS API](https://docs.metaperson.avatarsdk.com/js_api.html)):
-```
+```js
 function onWindowMessage(evt) {
     if (evt.type === 'message') {
         if (evt.data?.source === 'metaperson_creator') {
