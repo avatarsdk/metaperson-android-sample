@@ -1,7 +1,7 @@
 This demo projects shows how the Metaperson avatars can be integrated into your native Android applications. It uses the mobile version of the [Metaperson Creator]([https://mobile.metaperson.avatarsdk.com/](https://mobile.metaperson.avatarsdk.com/)) which helps you to create and customize your lifelike avatars. 
 ## Getting started
 First you will need to clone the repository to your local drive. Open your project in Android Studio and find the "credentials.xml" file (app/src/main/res/values/credentials.xml):
-![[./img/android-credentials.png]]
+![Credentials](./img/android-credentials.png)
 Fill in the CLIENT_ID and CLIENT_SECRET parameters with the values from your [Avatar SDK developer account](https://accounts.avatarsdk.com/developer/). Please note that if you make a mistake in your CLIENT_ID or CLIENT_SECRET, you won't be able to export your avatar! Once the parameters are set, build and run the application on your device. 
 Inside the application: 
 - Press the "Create Metaperson" button
