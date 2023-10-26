@@ -120,17 +120,28 @@ class WebUiActivity : AppCompatActivity() {
     private val openDocumentContract = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ){
-        it?.let {
-            filePathCallback?.onReceiveValue(arrayOf(it))
-        } ?: Toast.makeText(this, "No Image Selected !!", Toast.LENGTH_SHORT).show()
+        if(it == null){
+            Toast.makeText(this, "No Image Selected !!", Toast.LENGTH_SHORT).show()
+            filePathCallback?.onReceiveValue(null)
+        } else {
+            it?.let {
+                filePathCallback?.onReceiveValue(arrayOf(it))
+            }
+        }
     }
 
     private val openCameraResultContract  = registerForActivityResult(ActivityResultContracts.TakePicturePreview()){
-        it?.let {
-            Log.d("ON RESULT", "no data bitmap: ${it}")
-            val path = MediaStore.Images.Media.insertImage(contentResolver, it, "fromCamera.jpeg", "")
-            filePathCallback?.onReceiveValue(arrayOf(Uri.parse(path)))
-        } ?: Toast.makeText(this, "No Image captured !!", Toast.LENGTH_SHORT).show()
+
+        if(it == null){
+            Toast.makeText(this, "No Image captured !!", Toast.LENGTH_SHORT).show()
+            filePathCallback?.onReceiveValue(null)
+        } else {
+            it?.let {
+                Log.d("ON RESULT", "no data bitmap: ${it}")
+                val path = MediaStore.Images.Media.insertImage(contentResolver, it, "fromCamera.jpeg", "")
+                filePathCallback?.onReceiveValue(arrayOf(Uri.parse(path)))
+            }
+        }
     }
 
     private val requestPermission = registerForActivityResult(
@@ -138,6 +149,7 @@ class WebUiActivity : AppCompatActivity() {
     ){ permissionMap ->
         if (!permissionMap.values.all { it }){
             Toast.makeText(this, "Camera permission not granted.", Toast.LENGTH_SHORT).show()
+            filePathCallback?.onReceiveValue(null)
         } else {
             openCameraResultContract.launch(null)
         }
