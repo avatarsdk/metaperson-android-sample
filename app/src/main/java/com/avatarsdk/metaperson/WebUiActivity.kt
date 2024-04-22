@@ -53,6 +53,12 @@ class WebUiActivity : AppCompatActivity() {
                 "        'textureProfile': '2K.png'\n" +
                 "    };\n" +
                 "    evt.source.postMessage(exportParametersMessage, '*');\n" +
+                "    let uiParametersMessage = {\n" +
+                "        'eventName': 'set_ui_parameters',\n" +
+                "        'isExportButtonVisible': false,\n" +
+                "        'isLoginButtonVisible': false,\n" +
+                "    };\n" +
+                "    evt.source.postMessage(uiParametersMessage, '*');\n" +
                 "\n" +
                 "}\n" +
                 "document.addEventListener('DOMContentLoaded', function onDocumentReady() {\n" +
@@ -157,7 +163,7 @@ class WebUiActivity : AppCompatActivity() {
     }
 
     private fun hasPermissionAccess(): Boolean{
-        return arrayOf(
+        return arrayOf (
             Manifest.permission.CAMERA,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         ).all {
