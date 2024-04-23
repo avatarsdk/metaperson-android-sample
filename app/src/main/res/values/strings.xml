@@ -2,4 +2,5 @@
     <string name="app_name">Metaperson Showase</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="create_avatar">Create Metaperson</string>
+    <string name="watch_tutorial">Watch Tutorial</string>
 </resources>

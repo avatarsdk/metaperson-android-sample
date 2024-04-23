@@ -21,17 +21,43 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-    <RelativeLayout android:id="@+id/RelativeLayout01"
+    <LinearLayout android:id="@+id/RelativeLayout01"
         android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:layout_marginBottom="10dp"
         android:layout_height="fill_parent">
-
-        <Button
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/logo_white"
+            />
+        <android.widget.Button
+            android:id="@+id/watch_tutorial"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            android:textColor="@color/white"
+            android:textSize="9pt"
+            android:textStyle=""
+            android:layout_centerInParent="true"
+            android:text="@string/watch_tutorial"
+            android:background="@drawable/rounded_shape"
+            android:layout_marginBottom="20dp"
+            />
+        <android.widget.Button
             android:id="@+id/create_button"
             android:layout_width="300dp"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
+            android:textSize="9pt"
+            android:textColor="@color/white"
             android:layout_centerInParent="true"
-            android:text="@string/create_avatar" />
-    </RelativeLayout>
+            android:text="@string/create_avatar"
+            android:background="@drawable/rounded_shape"
+            />
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/mail_button"
