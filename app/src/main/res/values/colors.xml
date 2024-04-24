@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="avatar_sdk_violet">#101E74</color>
     <color name="avatar_sdk_orange">#EE5545</color>
+    <color name="avatar_sdk_orange_drk">#a13b30</color>
+
 </resources>
