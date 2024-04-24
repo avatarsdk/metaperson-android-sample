@@ -18,6 +18,9 @@ class MainActivity : AppCompatActivity() {
         binding.createButton.setOnClickListener {
             openMetapersonCreator()
         }
+        binding.watchTutorial.setOnClickListener {
+            openTutorial()
+        }
         binding.mailButton.setOnClickListener{
             val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
                 data = Uri.parse("mailto:support@avatarsdk.com")
@@ -28,6 +31,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun openMetapersonCreator() {
         val intent = Intent(this, WebUiActivity::class.java)
+        startActivity(intent)
+    }
+    private fun openTutorial() {
+        val intent = Intent(this, TutorialActivity::class.java)
         startActivity(intent)
     }
 }

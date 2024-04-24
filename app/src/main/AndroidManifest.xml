@@ -21,16 +21,24 @@
         android:theme="@style/Theme.AndroidWebViewSample"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity android:name="com.avatarsdk.metaperson.WebUiActivity"
-            android:parentActivityName="com.avatarsdk.metaperson.MainActivity"
-            />
         <activity
-            android:name="com.avatarsdk.metaperson.MainActivity"
+            android:name=".TutorialActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".WebUiActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@style/Theme.AndroidWebViewSample.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 

@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Metaperson Showase</string>
+    <string name="app_name">MetaPerson Showcase</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="create_avatar">Create Metaperson</string>
+    <string name="create_avatar">Create MetaPerson</string>
     <string name="watch_tutorial">Watch Tutorial</string>
 </resources>
