@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -83,10 +84,18 @@ class WebUiActivity : AppCompatActivity() {
                         if (hasPermissionAccess()) {
                             openCameraResultContract.launch(null)
                         } else {
-                            requestPermission.launch(arrayOf(
-                                Manifest.permission.CAMERA,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE
-                            ))
+                            if(Build.VERSION.SDK_INT >= 33){
+                                requestPermission.launch(arrayOf(
+                                    Manifest.permission.CAMERA,
+                                    Manifest.permission.READ_MEDIA_IMAGES
+                                ))
+                            } else {
+                                requestPermission.launch(arrayOf(
+                                    Manifest.permission.CAMERA,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                ))
+                            }
+
                         }
                     } else {
                         openDocumentContract.launch("image/*")
@@ -159,7 +168,8 @@ class WebUiActivity : AppCompatActivity() {
     private fun hasPermissionAccess(): Boolean{
         return arrayOf(
             Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_MEDIA_IMAGES
         ).all {
             ActivityCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
         }
