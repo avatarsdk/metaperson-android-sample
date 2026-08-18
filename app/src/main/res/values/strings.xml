@@ -3,4 +3,5 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="create_avatar">Create MetaPerson</string>
     <string name="watch_tutorial">Watch Tutorial</string>
+    <string name="tutorial_no_player">No app available to play the tutorial video.</string>
 </resources>

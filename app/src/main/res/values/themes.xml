@@ -9,8 +9,10 @@
         <item name="colorSecondary">@color/avatar_sdk_orange</item>
         <item name="colorSecondaryVariant">@color/avatar_sdk_orange</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- No android:statusBarColor / navigationBarColor: both are ignored from targetSdk 35
+             onwards, where the system bars are always transparent and content draws behind
+             them. Bar backgrounds now come from windowBackground plus the per-activity
+             WindowInsets padding (see applySystemBarInsets). -->
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/avatar_sdk_violet</item>
     </style>

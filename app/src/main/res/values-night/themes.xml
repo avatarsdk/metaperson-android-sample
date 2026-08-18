@@ -9,8 +9,7 @@
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- No android:statusBarColor: ignored from targetSdk 35 onwards. See values/themes.xml. -->
         <!-- Customize your theme here. -->
     </style>
 </resources>

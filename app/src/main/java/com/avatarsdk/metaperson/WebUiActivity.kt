@@ -3,16 +3,16 @@ package com.avatarsdk.metaperson
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import android.util.Log
 import android.webkit.*
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import java.io.File
 import androidx.core.content.FileProvider
 import androidx.core.content.ContextCompat
@@ -70,6 +70,12 @@ class WebUiActivity : AppCompatActivity() {
             , null)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Edge-to-edge is mandatory from targetSdk 36; force light system bar icons because
+        // the window background is a dark navy (avatar_sdk_violet).
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+            navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT)
+        )
         super.onCreate(savedInstanceState)
 
         webView = WebView(this)
@@ -90,20 +96,9 @@ class WebUiActivity : AppCompatActivity() {
                 fileChooserParams?.let {
                     if (it.isCaptureEnabled){
                         if (hasPermissionAccess()) {
-                            openCameraResultContract.launch(null)
+                            openCamera()
                         } else {
-                            if(Build.VERSION.SDK_INT >= 33){
-                                requestPermission.launch(arrayOf(
-                                    Manifest.permission.CAMERA,
-                                    Manifest.permission.READ_MEDIA_IMAGES
-                                ))
-                            } else {
-                                requestPermission.launch(arrayOf(
-                                    Manifest.permission.CAMERA,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                ))
-                            }
-
+                            requestPermission.launch(arrayOf(Manifest.permission.CAMERA))
                         }
                     } else {
                         openDocumentContract.launch("image/*")
@@ -129,6 +124,8 @@ class WebUiActivity : AppCompatActivity() {
         webView!!.settings.allowFileAccessFromFileURLs = true
         webView!!.settings.javaScriptCanOpenWindowsAutomatically = true
         setContentView(webView)
+        // The WebView *is* the content view, so it takes the insets directly.
+        applySystemBarInsets(webView!!)
         webView!!.loadUrl("https://mobile.metaperson.avatarsdk.com/")
         webView!!.addJavascriptInterface(WebAppInterface(this, webView!!), "metapersonJsApi")
 
@@ -183,13 +180,11 @@ class WebUiActivity : AppCompatActivity() {
 
     }
 
+    // Only CAMERA is needed: captures go to a FileProvider cache URI (see openCamera) and
+    // gallery picks go through GetContent, neither of which requires a storage permission.
     private fun hasPermissionAccess(): Boolean{
-        return arrayOf (
-            Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_MEDIA_IMAGES
-        ).all {
-            ActivityCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
-        }
+        return ContextCompat.checkSelfPermission(
+            this, Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
     }
 }
