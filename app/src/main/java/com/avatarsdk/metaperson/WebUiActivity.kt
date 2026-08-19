@@ -11,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import android.util.Log
 import android.webkit.*
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import java.io.File
@@ -101,7 +102,9 @@ class WebUiActivity : AppCompatActivity() {
                             requestPermission.launch(arrayOf(Manifest.permission.CAMERA))
                         }
                     } else {
-                        openDocumentContract.launch("image/*")
+                        pickImageContract.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                        )
                     }
                 }
                 return true
@@ -131,16 +134,17 @@ class WebUiActivity : AppCompatActivity() {
 
     }
 
-    private val openDocumentContract = registerForActivityResult(
-        ActivityResultContracts.GetContent()
-    ){
-        if(it == null){
+    // The Android photo picker, rather than ACTION_GET_CONTENT: it needs no media permission,
+    // which Google Play's Photo and Video Permissions policy requires of apps targeting API 33+.
+    // Falls back to ACTION_OPEN_DOCUMENT on devices without the picker.
+    private val pickImageContract = registerForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ){ uri ->
+        if (uri == null) {
             Toast.makeText(this, "No Image Selected !!", Toast.LENGTH_SHORT).show()
             filePathCallback?.onReceiveValue(null)
         } else {
-            it?.let {
-                filePathCallback?.onReceiveValue(arrayOf(it))
-            }
+            filePathCallback?.onReceiveValue(arrayOf(uri))
         }
     }
 
@@ -181,7 +185,7 @@ class WebUiActivity : AppCompatActivity() {
     }
 
     // Only CAMERA is needed: captures go to a FileProvider cache URI (see openCamera) and
-    // gallery picks go through GetContent, neither of which requires a storage permission.
+    // gallery picks go through the photo picker, neither of which needs a storage permission.
     private fun hasPermissionAccess(): Boolean{
         return ContextCompat.checkSelfPermission(
             this, Manifest.permission.CAMERA

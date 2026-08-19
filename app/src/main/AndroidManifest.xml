@@ -4,10 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
+    <!-- No storage or media permissions: gallery picks go through the Android photo picker
+         (PickVisualMedia) and camera captures write to a FileProvider cache URI, so neither
+         READ_MEDIA_IMAGES nor WRITE_EXTERNAL_STORAGE is needed. Google Play's Photo and Video
+         Permissions policy requires apps targeting API 33+ to use system pickers rather than
+         declaring the broad media permissions. -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
